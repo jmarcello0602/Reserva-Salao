@@ -1,9 +1,14 @@
 // ==========================================
-// ESTADO GLOBAL DO CALENDÁRIO
+// DATA REAL ATUAL E LIMITES DE NAVEGAÇÃO
 // ==========================================
-let currentDate = new Date();
+const realToday = new Date();
+// Data limite mínima permitida: Exatamente 1 mês anterior ao mês atual
+const minAllowedDate = new Date(realToday.getFullYear(), realToday.getMonth() - 1, 1);
+
+let currentDate = new Date(); // Mês em exibição no calendário
 let reservasData = {}; // Estrutura: { 'YYYY-MM-DD': { nome, telefone, obs } }
 let selectedDateStr = "";
+let highlightedDateStr = null; // Para destacar a data pesquisada
 
 const DIAS_SEMANA = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
 const MESES = [
@@ -16,6 +21,10 @@ const monthYearTitle = document.getElementById("monthYearTitle");
 const calendarGrid = document.getElementById("calendarGrid");
 const btnPrev = document.getElementById("btnPrev");
 const btnNext = document.getElementById("btnNext");
+
+// Elementos da Pesquisa
+const inputPesquisaData = document.getElementById("inputPesquisaData");
+const btnPesquisar = document.getElementById("btnPesquisar");
 
 // Modal de Reserva
 const modalReserva = document.getElementById("modalReserva");
@@ -37,7 +46,7 @@ const btnCancelarReserva = document.getElementById("btnCancelarReserva");
 const btnFecharDetalhes = document.getElementById("btnFecharDetalhes");
 
 // ==========================================
-// CARREGAR E SALVAR NO LOCALSTORAGE
+// ARMAZENAMENTO LOCAL (LOCALSTORAGE)
 // ==========================================
 function carregarReservas() {
   const dadosSalvos = localStorage.getItem("reservas_salao");
@@ -57,10 +66,16 @@ function renderCalendar() {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
+  // Atualiza título do mês/ano
   monthYearTitle.innerText = `${MESES[month]} ${year}`;
   calendarGrid.innerHTML = "";
 
-  // 1. Renderiza cabeçalhos dos dias da semana
+  // Desativa o botão anterior se atingir o limite (1 mês antes do atual)
+  const isAtMinLimit = (year < minAllowedDate.getFullYear()) || 
+                       (year === minAllowedDate.getFullYear() && month <= minAllowedDate.getMonth());
+  btnPrev.disabled = isAtMinLimit;
+
+  // 1. Cabeçalhos dos dias da semana
   DIAS_SEMANA.forEach(dia => {
     const headerCell = document.createElement("div");
     headerCell.className = "weekday-header";
@@ -68,7 +83,7 @@ function renderCalendar() {
     calendarGrid.appendChild(headerCell);
   });
 
-  // 2. Cálculo de dias do mês
+  // 2. Cálculos dos dias
   const firstDayIndex = new Date(year, month, 1).getDay();
   const totalDays = new Date(year, month + 1, 0).getDate();
   const prevMonthTotalDays = new Date(year, month, 0).getDate();
@@ -108,10 +123,15 @@ function createCell(dayNumber, isOtherMonth, dateKey = null) {
     return cell;
   }
 
+  // Destacar se for a data pesquisada
+  if (dateKey === highlightedDateStr) {
+    cell.classList.add("highlight-search");
+  }
+
   const reserva = dateKey ? reservasData[dateKey] : null;
 
   if (reserva) {
-    // RESERVADO -> BLOCO VERMELHO AUTOMÁTICO
+    // RESERVADO -> BLOCO ROXO AUTOMÁTICO
     cell.classList.add("reserved");
     cell.innerHTML = `
       <span class="day-number">${dayNumber}</span>
@@ -120,7 +140,7 @@ function createCell(dayNumber, isOtherMonth, dateKey = null) {
     `;
     cell.addEventListener("click", () => abrirModalDetalhes(dateKey, reserva));
   } else {
-    // LIVRE -> FUNDO BRANCO
+    // LIVRE -> FUNDO ROXO SUAVE/BRANCO
     cell.classList.add("free");
     cell.innerHTML = `
       <span class="day-number">${dayNumber}</span>
@@ -130,6 +150,42 @@ function createCell(dayNumber, isOtherMonth, dateKey = null) {
   }
 
   return cell;
+}
+
+// ==========================================
+// PESQUISA RÁPIDA DE DIA E MÊS
+// ==========================================
+function pesquisarData() {
+  const val = inputPesquisaData.value;
+  if (!val) {
+    alert("Por favor, selecione uma data no campo de pesquisa.");
+    return;
+  }
+
+  const [y, m, d] = val.split("-").map(Number);
+  const targetDate = new Date(y, m - 1, d);
+
+  // Validação: não permitir ir para antes do mês anterior ao atual
+  const minCheck = new Date(targetDate.getFullYear(), targetDate.getMonth(), 1);
+  if (minCheck < minAllowedDate) {
+    alert(`Apenas é possível visualizar até ${MESES[minAllowedDate.getMonth()]} de ${minAllowedDate.getFullYear()}.`);
+    return;
+  }
+
+  // Mudar mês em exibição para o mês pesquisado
+  currentDate = new Date(y, m - 1, 1);
+  highlightedDateStr = `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+
+  renderCalendar();
+
+  // Scroll suave até o calendário
+  calendarGrid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  // Remover o destaque após 4 segundos
+  setTimeout(() => {
+    highlightedDateStr = null;
+    renderCalendar();
+  }, 4000);
 }
 
 // ==========================================
@@ -201,7 +257,7 @@ btnCancelarReserva.addEventListener("click", () => {
   fecharModalDetalhes();
 });
 
-// Controles de Navegação de Mês
+// Navegação de Meses
 btnPrev.addEventListener("click", () => {
   currentDate.setMonth(currentDate.getMonth() - 1);
   renderCalendar();
@@ -212,6 +268,8 @@ btnNext.addEventListener("click", () => {
   renderCalendar();
 });
 
+btnPesquisar.addEventListener("click", pesquisarData);
+
 btnFecharModal.addEventListener("click", fecharModalReserva);
 btnFecharDetalhes.addEventListener("click", fecharModalDetalhes);
 
@@ -220,6 +278,6 @@ window.addEventListener("click", (e) => {
   if (e.target === modalDetalhes) fecharModalDetalhes();
 });
 
-// Iniciar Aplicação
+// Inicialização
 carregarReservas();
 renderCalendar();
