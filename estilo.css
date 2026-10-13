@@ -1,9 +1,11 @@
-/* Reset Básico e Tipografia Global */
+/* ==========================================
+   TIPOGRAFIA E RESET GLOBAL
+   ========================================== */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
@@ -25,12 +27,14 @@ body {
   box-shadow: 0 15px 35px rgba(124, 58, 237, 0.08), 0 5px 15px rgba(0, 0, 0, 0.03);
 }
 
-/* Cabeçalho */
+/* ==========================================
+   CABEÇALHO
+   ========================================== */
 .app-header {
   text-align: center;
   margin-bottom: 24px;
   padding-bottom: 18px;
-  border-bottom: 1.5px solid #f3e8ff;
+  border-bottom: 2px solid #f3e8ff;
 }
 
 .header-badge {
@@ -59,10 +63,12 @@ body {
   font-size: 0.98rem;
 }
 
-/* Caixa de Pesquisa - Design Cartão Elegante */
+/* ==========================================
+   CAIXA DE PESQUISA ELEGANTE
+   ========================================== */
 .search-card {
   background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
-  border: 1.5px solid #e9d5ff;
+  border: 2px solid #e9d5ff;
   border-radius: 18px;
   padding: 20px 24px;
   margin-bottom: 24px;
@@ -106,7 +112,7 @@ body {
 .search-date-input {
   width: 100%;
   padding: 12px 16px;
-  border: 1.5px solid #ddd6fe;
+  border: 2px solid #ddd6fe;
   border-radius: 12px;
   font-size: 0.95rem;
   color: #4c1d95;
@@ -123,7 +129,7 @@ body {
 
 .btn-search {
   background-color: #7c3aed;
-  color: white;
+  color: #ffffff;
   border: none;
   padding: 12px 22px;
   border-radius: 12px;
@@ -140,344 +146,4 @@ body {
   background-color: #6d28d9;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
-}
-
-/* Controles de Mês */
-.calendar-controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.calendar-controls h2 {
-  font-size: 1.5rem;
-  color: #4c1d95;
-  font-weight: 800;
-  text-transform: capitalize;
-  letter-spacing: -0.4px;
-}
-
-.btn-nav {
-  background-color: #ede9fe;
-  color: #6d28d9;
-  border: 1px solid #ddd6fe;
-  padding: 10px 18px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-}
-
-.btn-nav:hover:not(:disabled) {
-  background-color: #7c3aed;
-  color: white;
-  border-color: #7c3aed;
-}
-
-.btn-nav:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-  background-color: #f3f0fa;
-}
-
-/* Legenda */
-.legend {
-  display: flex;
-  justify-content: center;
-  gap: 28px;
-  margin-bottom: 20px;
-}
-
-.legend-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.88rem;
-  font-weight: 700;
-  color: #5b21b6;
-}
-
-.color-box {
-  width: 18px;
-  height: 18px;
-  border-radius: 6px;
-}
-
-.box-free {
-  background-color: #ffffff;
-  border: 2px solid #8b5cf6;
-}
-
-.box-reserved {
-  background-color: #6d28d9; /* Roxo Vibrante para Reservado */
-}
-
-/* Grade do Calendário (Roxo Delicado) */
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  border: 2px solid #ddd6fe;
-  background-color: #ede9fe;
-  gap: 2px;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.05);
-}
-
-.weekday-header {
-  background-color: #f5f3ff;
-  color: #6d28d9;
-  font-weight: 800;
-  text-align: center;
-  padding: 14px 4px;
-  font-size: 0.85rem;
-  letter-spacing: 0.8px;
-}
-
-.day-cell {
-  background-color: #ffffff;
-  min-height: 100px;
-  padding: 8px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  cursor: pointer;
-  position: relative;
-  transition: all 0.2s ease;
-}
-
-.day-cell:hover {
-  background-color: #faf5ff;
-}
-
-.day-cell.other-month {
-  background-color: #fcfaff;
-  opacity: 0.35;
-  cursor: not-allowed;
-}
-
-.day-number {
-  align-self: flex-end;
-  font-weight: 800;
-  font-size: 0.95rem;
-  color: #4c1d95;
-}
-
-.status-tag {
-  font-size: 0.72rem;
-  font-weight: 800;
-  text-align: center;
-  padding: 4px 6px;
-  border-radius: 6px;
-  text-transform: uppercase;
-  word-break: break-word;
-}
-
-/* Bloco Livre (Delicado) */
-.day-cell.free .status-tag {
-  color: #7c3aed;
-  background-color: #f3e8ff;
-}
-
-/* Bloco Reservado (Roxo Vibrante Destacado) */
-.day-cell.reserved {
-  background-color: #6d28d9 !important;
-  color: white;
-}
-
-.day-cell.reserved .day-number {
-  color: white;
-}
-
-.day-cell.reserved .status-tag {
-  background-color: rgba(255, 255, 255, 0.25);
-  color: white;
-}
-
-.person-name {
-  font-size: 0.78rem;
-  font-weight: 700;
-  margin-top: 4px;
-  line-height: 1.15;
-  text-align: center;
-}
-
-/* Destaque ao pesquisar */
-.day-cell.highlight-search {
-  animation: pulseHighlight 1.5s infinite alternate;
-  border: 3px solid #facc15 !important;
-  z-index: 10;
-  border-radius: 8px;
-}
-
-@keyframes pulseHighlight {
-  0% { transform: scale(1); box-shadow: 0 0 0px #8b5cf6; }
-  100% { transform: scale(1.04); box-shadow: 0 0 16px rgba(139, 92, 246, 0.6); }
-}
-
-/* Modais */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(30, 10, 60, 0.45);
-  backdrop-filter: blur(4px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
-  z-index: 1000;
-}
-
-.modal-overlay.hidden {
-  display: none;
-}
-
-.modal-card {
-  background-color: white;
-  width: 100%;
-  max-width: 420px;
-  padding: 28px;
-  border-radius: 20px;
-  box-shadow: 0 20px 30px rgba(76, 29, 149, 0.15);
-}
-
-.modal-card h3 {
-  color: #4c1d95;
-  font-size: 1.35rem;
-  font-weight: 800;
-  margin-bottom: 4px;
-}
-
-.modal-subtitle {
-  color: #7c3aed;
-  font-size: 0.9rem;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.form-group {
-  margin-bottom: 16px;
-}
-
-.form-group label {
-  display: block;
-  font-size: 0.85rem;
-  font-weight: 700;
-  margin-bottom: 6px;
-  color: #5b21b6;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 11px 14px;
-  border: 1.5px solid #ddd6fe;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  outline: none;
-}
-
-.form-group input:focus {
-  border-color: #8b5cf6;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15);
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-  margin-top: 22px;
-}
-
-.modal-actions-col {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-top: 22px;
-}
-
-.info-group p {
-  margin-bottom: 10px;
-  font-size: 0.95rem;
-  color: #3b0764;
-}
-
-/* Botões Globais */
-.btn-primary {
-  background-color: #7c3aed;
-  color: white;
-  border: none;
-  padding: 11px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 700;
-  transition: all 0.2s;
-}
-
-.btn-primary:hover {
-  background-color: #6d28d9;
-}
-
-.btn-secondary {
-  background-color: #f3e8ff;
-  color: #6d28d9;
-  border: none;
-  padding: 11px 20px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.btn-danger {
-  background-color: #ef4444;
-  color: white;
-  border: none;
-  padding: 11px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 700;
-}
-
-.btn-whatsapp {
-  background-color: #25d366;
-  color: white;
-  text-decoration: none;
-  text-align: center;
-  padding: 12px;
-  border-radius: 10px;
-  font-weight: 700;
-  display: block;
-}
-
-@media (max-width: 600px) {
-  .app-container {
-    padding: 20px 14px;
-  }
-  .main-title {
-    font-size: 1.7rem;
-  }
-  .search-form-row {
-    flex-direction: column;
-  }
-  .btn-search {
-    justify-content: center;
-  }
-  .day-cell {
-    min-height: 75px;
-    padding: 4px;
-  }
-  .weekday-header {
-    font-size: 0.72rem;
-    padding: 10px 2px;
-  }
-  .status-tag {
-    font-size: 0.64rem;
-  }
-  .person-name {
-    font-size: 0.68rem;
-  }
 }
