@@ -3,7 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agenda Coletiva - Salão Familiar</title>
+  <title>Calendário de Reservas</title>
+  <!-- Fonte Google Elegante para o Título -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
@@ -11,11 +15,22 @@
   <div class="app-container">
     <!-- Cabeçalho -->
     <header class="app-header">
-      <h1>Salão de Festas Familiar</h1>
-      <p>Agenda de Reservas do Salão</p>
+      <h1 class="main-title">Calendário de Reservas</h1>
+      <p>Agenda do Salão Familiar</p>
     </header>
 
-    <!-- Controles de Mês -->
+    <!-- Barra de Pesquisa Direta por Data -->
+    <div class="search-section">
+      <div class="search-box">
+        <label for="inputPesquisaData">🔍 Pesquisar dia e mês:</label>
+        <div class="search-inputs">
+          <input type="date" id="inputPesquisaData" class="search-input">
+          <button id="btnPesquisar" class="btn-search">Ir para a Data</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Controles de Navegação do Mês -->
     <div class="calendar-controls">
       <button id="btnPrev" class="btn-nav">&lt; Mês Anterior</button>
       <h2 id="monthYearTitle">Mês Ano</h2>
@@ -34,9 +49,9 @@
       </div>
     </div>
 
-    <!-- Grade do Calendário -->
+    <!-- Grade do Calendário Roxo -->
     <div id="calendarGrid" class="calendar-grid">
-      <!-- Gerado via JavaScript -->
+      <!-- Gerado dinamicamente via JavaScript -->
     </div>
   </div>
 
