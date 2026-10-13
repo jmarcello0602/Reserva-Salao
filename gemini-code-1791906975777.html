@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda Coletiva - Salão Familiar</title>
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Cabeçalho -->
+    <header class="app-header">
+      <h1>Salão de Festas Familiar</h1>
+      <p>Agenda de Reservas do Salão</p>
+    </header>
+
+    <!-- Controles de Mês -->
+    <div class="calendar-controls">
+      <button id="btnPrev" class="btn-nav">&lt; Mês Anterior</button>
+      <h2 id="monthYearTitle">Mês Ano</h2>
+      <button id="btnNext" class="btn-nav">Próximo Mês &gt;</button>
+    </div>
+
+    <!-- Legenda das Cores -->
+    <div class="legend">
+      <div class="legend-item">
+        <span class="color-box box-free"></span>
+        <span>Livre</span>
+      </div>
+      <div class="legend-item">
+        <span class="color-box box-reserved"></span>
+        <span>Reservado</span>
+      </div>
+    </div>
+
+    <!-- Grade do Calendário -->
+    <div id="calendarGrid" class="calendar-grid">
+      <!-- Gerado via JavaScript -->
+    </div>
+  </div>
+
+  <!-- Modal: Criar Reserva -->
+  <div id="modalReserva" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3 id="modalTitle">Reservar Salão</h3>
+      <p id="modalDateInfo" class="modal-subtitle">Data selecionada</p>
+      
+      <form id="formReserva">
+        <div class="form-group">
+          <label for="inputNome">Nome do Responsável *</label>
+          <input type="text" id="inputNome" placeholder="Ex: Maria Silva" required>
+        </div>
+
+        <div class="form-group">
+          <label for="inputTelefone">Celular / WhatsApp *</label>
+          <input type="tel" id="inputTelefone" placeholder="Ex: (11) 99999-8888" required>
+        </div>
+
+        <div class="form-group">
+          <label for="inputObs">Observação / Evento (Opcional)</label>
+          <input type="text" id="inputObs" placeholder="Ex: Aniversário do Lucas">
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" id="btnFecharModal" class="btn-secondary">Cancelar</button>
+          <button type="submit" id="btnSalvarReserva" class="btn-primary">Confirmar Reserva</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Detalhes e Cancelamento -->
+  <div id="modalDetalhes" class="modal-overlay hidden">
+    <div class="modal-card">
+      <h3>Detalhes da Reserva</h3>
+      <p id="detalhesData" class="modal-subtitle">Data</p>
+
+      <div class="info-group">
+        <p><strong>Responsável:</strong> <span id="detalhesNome">-</span></p>
+        <p><strong>Telefone:</strong> <span id="detalhesTelefone">-</span></p>
+        <p><strong>Evento/Obs:</strong> <span id="detalhesObs">-</span></p>
+      </div>
+
+      <div class="modal-actions-col">
+        <a id="btnWhatsapp" href="#" target="_blank" class="btn-whatsapp">
+          💬 Conversar no WhatsApp
+        </a>
+        <button id="btnCancelarReserva" class="btn-danger">Cancelar Reserva</button>
+        <button id="btnFecharDetalhes" class="btn-secondary">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
