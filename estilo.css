@@ -1,149 +1,338 @@
-/* ==========================================
-   TIPOGRAFIA E RESET GLOBAL
-   ========================================== */
+/* Reset Básico */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 body {
-  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
-  color: #3b0764;
+  background-color: #f4f7f5;
+  color: #2d3748;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: 24px 16px;
+  padding: 20px;
   min-height: 100vh;
 }
 
 .app-container {
   width: 100%;
-  max-width: 920px;
+  max-width: 900px;
   background-color: #ffffff;
-  padding: 32px 28px;
-  border-radius: 24px;
-  box-shadow: 0 15px 35px rgba(124, 58, 237, 0.08), 0 5px 15px rgba(0, 0, 0, 0.03);
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
 }
 
-/* ==========================================
-   CABEÇALHO
-   ========================================== */
+/* Cabeçalho */
 .app-header {
   text-align: center;
-  margin-bottom: 24px;
-  padding-bottom: 18px;
-  border-bottom: 2px solid #f3e8ff;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #e2e8f0;
 }
 
-.header-badge {
-  display: inline-block;
-  background-color: #f3e8ff;
-  color: #7c3aed;
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 4px 12px;
-  border-radius: 20px;
-  margin-bottom: 8px;
-  letter-spacing: 0.3px;
-}
-
-.main-title {
-  font-weight: 800;
-  font-size: 2.3rem;
-  color: #5b21b6;
-  letter-spacing: -0.8px;
+.app-header h1 {
+  font-size: 1.8rem;
+  color: #1b4f3a;
   margin-bottom: 6px;
 }
 
 .app-header p {
-  color: #7c3aed;
-  font-weight: 500;
-  font-size: 0.98rem;
-}
-
-/* ==========================================
-   CAIXA DE PESQUISA ELEGANTE
-   ========================================== */
-.search-card {
-  background: linear-gradient(135deg, #ffffff 0%, #faf5ff 100%);
-  border: 2px solid #e9d5ff;
-  border-radius: 18px;
-  padding: 20px 24px;
-  margin-bottom: 24px;
-  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.04);
-}
-
-.search-header {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.search-icon {
-  font-size: 1.3rem;
-  background-color: #f3e8ff;
-  padding: 8px;
-  border-radius: 10px;
-}
-
-.search-text h3 {
-  font-size: 1rem;
-  font-weight: 700;
-  color: #4c1d95;
-}
-
-.search-text p {
-  font-size: 0.82rem;
-  color: #8b5cf6;
-}
-
-.search-form-row {
-  display: flex;
-  gap: 12px;
-}
-
-.input-wrapper {
-  flex: 1;
-}
-
-.search-date-input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #ddd6fe;
-  border-radius: 12px;
+  color: #718096;
   font-size: 0.95rem;
-  color: #4c1d95;
-  font-weight: 600;
-  background-color: #ffffff;
-  outline: none;
-  transition: all 0.2s ease;
 }
 
-.search-date-input:focus {
-  border-color: #8b5cf6;
-  box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
+/* Controles de Mês */
+.calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
-.btn-search {
-  background-color: #7c3aed;
-  color: #ffffff;
-  border: none;
-  padding: 12px 22px;
-  border-radius: 12px;
+.calendar-controls h2 {
+  font-size: 1.4rem;
+  color: #1b4f3a;
   font-weight: 700;
-  font-size: 0.92rem;
+  text-transform: capitalize;
+}
+
+.btn-nav {
+  background-color: #1b4f3a;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btn-nav:hover {
+  background-color: #143d2d;
+}
+
+/* Legenda */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.legend-item {
   display: flex;
   align-items: center;
   gap: 8px;
-  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 600;
 }
 
-.btn-search:hover {
-  background-color: #6d28d9;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(109, 40, 217, 0.25);
+.color-box {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+}
+
+.box-free {
+  background-color: #ffffff;
+  border: 2px solid #1b4f3a;
+}
+
+.box-reserved {
+  background-color: #e63946;
+}
+
+/* Grade do Calendário (Estilo Foto Verde) */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  border: 3px solid #1b4f3a;
+  background-color: #1b4f3a;
+  gap: 3px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.weekday-header {
+  background-color: #ffffff;
+  color: #1b4f3a;
+  font-weight: 800;
+  text-align: center;
+  padding: 12px 4px;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
+
+.day-cell {
+  background-color: #ffffff;
+  min-height: 95px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.1s, filter 0.1s;
+}
+
+.day-cell:hover {
+  filter: brightness(0.97);
+}
+
+.day-cell.other-month {
+  background-color: #f7fafc;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.day-number {
+  align-self: flex-end;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: #2d3748;
+}
+
+.status-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 4px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  word-break: break-word;
+}
+
+/* Bloco Livre */
+.day-cell.free .status-tag {
+  color: #a0aec0;
+  background-color: #edf2f7;
+}
+
+/* Bloco Reservado (Vermelho) */
+.day-cell.reserved {
+  background-color: #e63946 !important;
+  color: white;
+}
+
+.day-cell.reserved .day-number {
+  color: white;
+}
+
+.day-cell.reserved .status-tag {
+  background-color: rgba(255, 255, 255, 0.25);
+  color: white;
+}
+
+.person-name {
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-top: 4px;
+  line-height: 1.1;
+  text-align: center;
+}
+
+/* Modais */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  z-index: 1000;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-card {
+  background-color: white;
+  width: 100%;
+  max-width: 420px;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+}
+
+.modal-card h3 {
+  color: #1b4f3a;
+  font-size: 1.3rem;
+  margin-bottom: 4px;
+}
+
+.modal-subtitle {
+  color: #718096;
+  font-size: 0.9rem;
+  margin-bottom: 18px;
+}
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #4a5568;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.form-group input:focus {
+  border-color: #1b4f3a;
+  box-shadow: 0 0 0 2px rgba(27, 79, 58, 0.2);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-actions-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.info-group p {
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+
+/* Botões */
+.btn-primary {
+  background-color: #1b4f3a;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-secondary {
+  background-color: #e2e8f0;
+  color: #4a5568;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-danger {
+  background-color: #e63946;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-whatsapp {
+  background-color: #25d366;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  display: block;
+}
+
+@media (max-width: 600px) {
+  .day-cell {
+    min-height: 70px;
+    padding: 4px;
+  }
+  .weekday-header {
+    font-size: 0.75rem;
+    padding: 8px 2px;
+  }
+  .status-tag {
+    font-size: 0.65rem;
+  }
+  .person-name {
+    font-size: 0.68rem;
+  }
 }
