@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Calendário de Reservas</title>
-  <!-- Fonte Google Elegante para o Título -->
+  
+  <!-- Fonte Moderna e Elegante (Plus Jakarta Sans) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="estilo.css">
 </head>
 <body>
@@ -15,26 +17,40 @@
   <div class="app-container">
     <!-- Cabeçalho -->
     <header class="app-header">
+      <div class="header-badge">✨ Agenda Familiar</div>
       <h1 class="main-title">Calendário de Reservas</h1>
-      <p>Agenda do Salão Familiar</p>
+      <p>Reserve o Salão de Festas com facilidade</p>
     </header>
 
-    <!-- Barra de Pesquisa Direta por Data -->
-    <div class="search-section">
-      <div class="search-box">
-        <label for="inputPesquisaData">🔍 Pesquisar dia e mês:</label>
-        <div class="search-inputs">
-          <input type="date" id="inputPesquisaData" class="search-input">
-          <button id="btnPesquisar" class="btn-search">Ir para a Data</button>
+    <!-- Caixa de Pesquisa Elegante -->
+    <section class="search-card">
+      <div class="search-header">
+        <span class="search-icon">🔍</span>
+        <div class="search-text">
+          <h3>Buscar Data Específica</h3>
+          <p>Escolha um dia e mês para ir direto no calendário</p>
         </div>
       </div>
-    </div>
+      <div class="search-form-row">
+        <div class="input-wrapper">
+          <input type="date" id="inputPesquisaData" class="search-date-input">
+        </div>
+        <button id="btnPesquisar" class="btn-search">
+          <span>Ir para o Dia</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </section>
 
-    <!-- Controles de Navegação do Mês -->
+    <!-- Controles de Mês -->
     <div class="calendar-controls">
-      <button id="btnPrev" class="btn-nav">&lt; Mês Anterior</button>
+      <button id="btnPrev" class="btn-nav">
+        ‹ Mês Anterior
+      </button>
       <h2 id="monthYearTitle">Mês Ano</h2>
-      <button id="btnNext" class="btn-nav">Próximo Mês &gt;</button>
+      <button id="btnNext" class="btn-nav">
+        Próximo Mês ›
+      </button>
     </div>
 
     <!-- Legenda das Cores -->
@@ -49,9 +65,9 @@
       </div>
     </div>
 
-    <!-- Grade do Calendário Roxo -->
+    <!-- Grade do Calendário (Roxo Delicado) -->
     <div id="calendarGrid" class="calendar-grid">
-      <!-- Gerado dinamicamente via JavaScript -->
+      <!-- Gerado via JavaScript -->
     </div>
   </div>
 
