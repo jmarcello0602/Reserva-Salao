@@ -349,3 +349,10 @@ body {
     font-size: 0.68rem;
   }
 }
+
+/* Estilo para dias que já passaram */
+.day-cell.past-date {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #f9f9f9;
+}
