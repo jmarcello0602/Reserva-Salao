@@ -13,6 +13,15 @@ body {
   color: #22304a;
 }
 
+.app-header,
+.calendar-controls,
+.legend,
+.modal-card {
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 10px 30px rgba(34, 48, 74, 0.08);
+}
+
 .app-container {
   max-width: 900px;
   margin: 0 auto;
