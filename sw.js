@@ -37,7 +37,6 @@ self.addEventListener('activate', (event) => {
 
 // 3. Interceptação: Entregar do cache ou buscar na rede
 self.addEventListener('fetch', (event) => {
-  // Ignora requisições para o Firebase (para não quebrar o banco de dados)
   if (event.request.url.includes('firestore.googleapis.com')) {
     return;
   }
