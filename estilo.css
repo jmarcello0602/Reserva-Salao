@@ -7,12 +7,16 @@
 }
 
 body {
-  background-color: #f4f7f5;
-  color: #2d3748;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f5f9;
+  color: #22304a;
+}
+
+.app-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
 }
 
 .app-container {
