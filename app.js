@@ -141,21 +141,47 @@ function createCell(dayNumber, isOtherMonth, dateKey = null) {
 
   const reserva = dateKey ? reservasData[dateKey] : null;
 
+  // --- NOVA LÓGICA: Verificar se o dia já passou ---
+  const hoje = new Date();
+  hoje.setHours(0, 0, 0, 0); // Zera as horas para comparar apenas o dia
+  
+  const [ano, mes, dia] = dateKey.split("-");
+  const dataDaCelula = new Date(ano, mes - 1, dia); // mes - 1 porque no JavaScript os meses vão de 0 a 11
+  dataDaCelula.setHours(0, 0, 0, 0);
+
+  const isPassado = dataDaCelula < hoje; // Retorna true se a data for antes de hoje
+  // ------------------------------------------------
+
   if (reserva) {
     cell.classList.add("reserved");
+    if (isPassado) cell.classList.add("past-date"); // Adiciona classe para mudar a cor via CSS se quiser
+
     cell.innerHTML = `
       <span class="day-number">${dayNumber}</span>
       <div class="status-tag">RESERVADO</div>
       <div class="person-name">${reserva.nome}</div>
     `;
+    // Deixamos clicar para ver os detalhes da reserva, mesmo que já tenha passado
     cell.addEventListener("click", () => abrirModalDetalhes(dateKey, reserva));
   } else {
-    cell.classList.add("free");
-    cell.innerHTML = `
-      <span class="day-number">${dayNumber}</span>
-      <div class="status-tag">LIVRE</div>
-    `;
-    cell.addEventListener("click", () => abrirModalReserva(dateKey));
+    if (isPassado) {
+      // DATA PASSADA SEM RESERVA: Não pode reservar mais
+      cell.classList.add("past-date");
+      cell.innerHTML = `
+        <span class="day-number">${dayNumber}</span>
+        <div class="status-tag" style="background-color: #e0e0e0; color: #7a7a7a;">PASSOU</div>
+      `;
+      // Perceba que NÃO adicionamos o evento de clique (addEventListener) aqui.
+      // Assim, quando a pessoa clica, nada acontece.
+    } else {
+      // DATA FUTURA/HOJE LIVRE: Pode reservar
+      cell.classList.add("free");
+      cell.innerHTML = `
+        <span class="day-number">${dayNumber}</span>
+        <div class="status-tag">LIVRE</div>
+      `;
+      cell.addEventListener("click", () => abrirModalReserva(dateKey));
+    }
   }
 
   return cell;
