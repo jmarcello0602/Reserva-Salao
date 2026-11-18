@@ -1,8 +1,33 @@
 // ==========================================
+// CONFIGURAÇÃO DO FIREBASE (NUVEM EM TEMPO REAL)
+// ==========================================
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { 
+  getFirestore, 
+  collection, 
+  doc, 
+  setDoc, 
+  deleteDoc, 
+  onSnapshot 
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAhbmOpnA0NNwMn92RGuPt1ZB3Bz7_ckvM",
+  authDomain: "salao-familiar.firebaseapp.com",
+  projectId: "salao-familiar",
+  storageBucket: "salao-familiar.firebasestorage.app",
+  messagingSenderId: "85299228047",
+  appId: "1:85299228047:web:5bdbdff1264ffdbd36affa"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ==========================================
 // ESTADO GLOBAL DO CALENDÁRIO
 // ==========================================
 let currentDate = new Date();
-let reservasData = {}; // Estrutura: { 'YYYY-MM-DD': { nome, telefone, obs } }
+let reservasData = {}; // Será preenchido automaticamente pelo Firebase
 let selectedDateStr = "";
 
 const DIAS_SEMANA = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
@@ -11,7 +36,9 @@ const MESES = [
   "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
 ];
 
-// Elementos da DOM
+// ==========================================
+// ELEMENTOS DA DOM
+// ==========================================
 const monthYearTitle = document.getElementById("monthYearTitle");
 const calendarGrid = document.getElementById("calendarGrid");
 const btnPrev = document.getElementById("btnPrev");
@@ -37,17 +64,21 @@ const btnCancelarReserva = document.getElementById("btnCancelarReserva");
 const btnFecharDetalhes = document.getElementById("btnFecharDetalhes");
 
 // ==========================================
-// CARREGAR E SALVAR NO LOCALSTORAGE
+// CONEXÃO COM BANCO DE DADOS EM TEMPO REAL
 // ==========================================
-function carregarReservas() {
-  const dadosSalvos = localStorage.getItem("reservas_salao");
-  if (dadosSalvos) {
-    reservasData = JSON.parse(dadosSalvos);
-  }
-}
-
-function salvarReservas() {
-  localStorage.setItem("reservas_salao", JSON.stringify(reservasData));
+function iniciarEscutaReservas() {
+  // Escuta a coleção 'reservas'. Sempre que alguém adicionar, alterar ou remover
+  // uma reserva, esta função roda automaticamente para todos os usuários logados.
+  onSnapshot(collection(db, "reservas"), (snapshot) => {
+    reservasData = {}; // Limpa o objeto local
+    
+    snapshot.forEach((documento) => {
+      // O ID do documento é a própria data (ex: '2024-05-15')
+      reservasData[documento.id] = documento.data(); 
+    });
+    
+    renderCalendar(); // Re-renderiza o calendário com os dados atualizados
+  });
 }
 
 // ==========================================
@@ -111,7 +142,6 @@ function createCell(dayNumber, isOtherMonth, dateKey = null) {
   const reserva = dateKey ? reservasData[dateKey] : null;
 
   if (reserva) {
-    // RESERVADO -> BLOCO VERMELHO AUTOMÁTICO
     cell.classList.add("reserved");
     cell.innerHTML = `
       <span class="day-number">${dayNumber}</span>
@@ -120,7 +150,6 @@ function createCell(dayNumber, isOtherMonth, dateKey = null) {
     `;
     cell.addEventListener("click", () => abrirModalDetalhes(dateKey, reserva));
   } else {
-    // LIVRE -> FUNDO BRANCO
     cell.classList.add("free");
     cell.innerHTML = `
       <span class="day-number">${dayNumber}</span>
@@ -133,7 +162,7 @@ function createCell(dayNumber, isOtherMonth, dateKey = null) {
 }
 
 // ==========================================
-// MODAIS E AÇÕES DE RESERVA
+// MODAIS
 // ==========================================
 function abrirModalReserva(dateKey) {
   selectedDateStr = dateKey;
@@ -170,8 +199,12 @@ function fecharModalDetalhes() {
   modalDetalhes.classList.add("hidden");
 }
 
-// Confirmar Reserva
-formReserva.addEventListener("submit", (e) => {
+// ==========================================
+// AÇÕES DE RESERVA NO BANCO DE DADOS
+// ==========================================
+
+// Criar Reserva
+formReserva.addEventListener("submit", async (e) => {
   e.preventDefault();
   const nome = inputNome.value.trim();
   const telefone = inputTelefone.value.trim();
@@ -179,29 +212,40 @@ formReserva.addEventListener("submit", (e) => {
 
   if (!nome || !telefone) return;
 
-  reservasData[selectedDateStr] = {
+  const novaReserva = {
     nome,
     telefone,
     obs,
     criadoEm: new Date().toISOString()
   };
 
-  salvarReservas();
-  renderCalendar();
-  fecharModalReserva();
+  try {
+    // Salva no banco de dados usando a data como ID do documento
+    await setDoc(doc(db, "reservas", selectedDateStr), novaReserva);
+    fecharModalReserva();
+  } catch (error) {
+    console.error("Erro ao salvar reserva:", error);
+    alert("Ocorreu um erro ao salvar sua reserva. Tente novamente.");
+  }
 });
 
 // Cancelar Reserva
-btnCancelarReserva.addEventListener("click", () => {
+btnCancelarReserva.addEventListener("click", async () => {
   if (!confirm("Tem certeza que deseja cancelar e liberar esta data?")) return;
 
-  delete reservasData[selectedDateStr];
-  salvarReservas();
-  renderCalendar();
-  fecharModalDetalhes();
+  try {
+    // Exclui a reserva do banco de dados com base na data
+    await deleteDoc(doc(db, "reservas", selectedDateStr));
+    fecharModalDetalhes();
+  } catch (error) {
+    console.error("Erro ao cancelar reserva:", error);
+    alert("Ocorreu um erro ao cancelar. Tente novamente.");
+  }
 });
 
-// Controles de Navegação de Mês
+// ==========================================
+// NAVEGAÇÃO E EVENTOS DE JANELA
+// ==========================================
 btnPrev.addEventListener("click", () => {
   currentDate.setMonth(currentDate.getMonth() - 1);
   renderCalendar();
@@ -220,6 +264,6 @@ window.addEventListener("click", (e) => {
   if (e.target === modalDetalhes) fecharModalDetalhes();
 });
 
-// Iniciar Aplicação
-carregarReservas();
-renderCalendar();
+// Iniciar Aplicação: 
+// 1. Liga o listener do banco de dados (que também chama o renderCalendar)
+iniciarEscutaReservas();
