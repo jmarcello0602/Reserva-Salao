@@ -7,19 +7,8 @@
 }
 
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f2f5f9;
-  color: #22304a;
-}
-
-.app-header,
-.calendar-controls,
-.legend,
-.modal-card {
-  background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(34, 48, 74, 0.08);
+  background: #f4f5f7; /* Fundo geral mais limpo e claro */
+  color: #2d3748;
 }
 
 .app-container {
@@ -28,26 +17,26 @@ body {
   padding: 24px;
 }
 
-.app-container {
-  width: 100%;
-  max-width: 900px;
-  background-color: #ffffff;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+.app-header,
+.calendar-controls,
+.legend,
+.modal-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); /* Sombra mais sutil e profissional */
 }
 
 /* Cabeçalho */
 .app-header {
   text-align: center;
   margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 2px solid #e2e8f0;
+  padding: 20px;
+  border-bottom: 3px solid #f0e6f6;
 }
 
 .app-header h1 {
   font-size: 1.8rem;
-  color: #1b4f3a;
+  color: #4a154b; /* Roxo Escuro Profissional */
   margin-bottom: 6px;
 }
 
@@ -62,28 +51,29 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+  padding: 16px;
 }
 
 .calendar-controls h2 {
   font-size: 1.4rem;
-  color: #1b4f3a;
+  color: #4a154b;
   font-weight: 700;
   text-transform: capitalize;
 }
 
 .btn-nav {
-  background-color: #1b4f3a;
+  background-color: #5e35b1; /* Roxo Principal */
   color: white;
   border: none;
   padding: 8px 16px;
-  border-radius: 8px;
+  border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.2s;
 }
 
 .btn-nav:hover {
-  background-color: #143d2d;
+  background-color: #4527a0; /* Roxo mais escuro no hover */
 }
 
 /* Legenda */
@@ -92,6 +82,7 @@ body {
   justify-content: center;
   gap: 24px;
   margin-bottom: 16px;
+  padding: 12px;
 }
 
 .legend-item {
@@ -100,110 +91,129 @@ body {
   gap: 8px;
   font-size: 0.9rem;
   font-weight: 600;
+  color: #4a5568;
 }
 
 .color-box {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   border-radius: 4px;
 }
 
 .box-free {
   background-color: #ffffff;
-  border: 2px solid #1b4f3a;
+  border: 2px solid #5e35b1;
 }
 
 .box-reserved {
-  background-color: #e63946;
+  background-color: #e53935; /* Vermelho vivo para destacar que não está disponível */
 }
 
-/* Grade do Calendário (Estilo Foto Verde) */
+/* Grade do Calendário */
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  border: 3px solid #1b4f3a;
-  background-color: #1b4f3a;
-  gap: 3px;
+  border: 1px solid #d1c4e9; /* Borda externa lilás clara */
+  background-color: #d1c4e9; /* Linhas divisórias do calendário */
+  gap: 1px; /* Linhas finas e elegantes */
   border-radius: 8px;
   overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
 }
 
 .weekday-header {
-  background-color: #ffffff;
-  color: #1b4f3a;
-  font-weight: 800;
+  background-color: #f3e5f5; /* Fundo lilás bem claro para os dias da semana */
+  color: #4a154b;
+  font-weight: 700;
   text-align: center;
   padding: 12px 4px;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .day-cell {
   background-color: #ffffff;
-  min-height: 95px;
-  padding: 6px;
+  min-height: 100px;
+  padding: 8px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   cursor: pointer;
   position: relative;
-  transition: transform 0.1s, filter 0.1s;
+  transition: background-color 0.15s ease;
 }
 
-.day-cell:hover {
-  filter: brightness(0.97);
+.day-cell:hover:not(.past-date):not(.other-month) {
+  background-color: #faf5ff; /* Hover levemente lilás */
 }
 
 .day-cell.other-month {
-  background-color: #f7fafc;
-  opacity: 0.4;
+  background-color: #f8f9fa;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .day-number {
   align-self: flex-end;
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: #2d3748;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #4a5568;
+}
+
+/* Dias que já passaram */
+.day-cell.past-date {
+  background-color: #f1f3f5;
+  cursor: not-allowed;
+}
+
+.day-cell.past-date .day-number {
+  color: #cbd5e0; /* Número apagado para dias antigos */
+}
+
+/* Mantém as reservas antigas visíveis, mas levemente opacas */
+.day-cell.reserved.past-date {
+  opacity: 0.65;
 }
 
 .status-tag {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   text-align: center;
   padding: 4px;
   border-radius: 4px;
   text-transform: uppercase;
-  word-break: break-word;
+  letter-spacing: 0.5px;
 }
 
 /* Bloco Livre */
 .day-cell.free .status-tag {
-  color: #a0aec0;
-  background-color: #edf2f7;
+  color: #5e35b1;
+  background-color: #ede7f6; /* Fundo da tag lilás */
 }
 
-/* Bloco Reservado (Vermelho) */
+/* Bloco Reservado */
 .day-cell.reserved {
-  background-color: #e63946 !important;
-  color: white;
+  background-color: #e53935 !important;
 }
 
-.day-cell.reserved .day-number {
+.day-cell.reserved .day-number,
+.day-cell.reserved .person-name {
   color: white;
 }
 
 .day-cell.reserved .status-tag {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.2);
   color: white;
 }
 
 .person-name {
-  font-size: 0.78rem;
-  font-weight: 700;
+  font-size: 0.8rem;
+  font-weight: 600;
   margin-top: 4px;
-  line-height: 1.1;
+  line-height: 1.2;
   text-align: center;
+  word-break: break-word;
 }
 
 /* Modais */
@@ -213,7 +223,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(30, 20, 40, 0.6); /* Overlay levemente roxo/escuro */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -226,35 +236,32 @@ body {
 }
 
 .modal-card {
-  background-color: white;
   width: 100%;
   max-width: 420px;
-  padding: 24px;
-  border-radius: 12px;
-  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+  padding: 28px;
 }
 
 .modal-card h3 {
-  color: #1b4f3a;
-  font-size: 1.3rem;
+  color: #4a154b;
+  font-size: 1.4rem;
   margin-bottom: 4px;
 }
 
 .modal-subtitle {
   color: #718096;
   font-size: 0.9rem;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
 .form-group {
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .form-group label {
   display: block;
   font-size: 0.85rem;
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   color: #4a5568;
 }
 
@@ -265,61 +272,78 @@ body {
   border-radius: 6px;
   font-size: 0.95rem;
   outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .form-group input:focus {
-  border-color: #1b4f3a;
-  box-shadow: 0 0 0 2px rgba(27, 79, 58, 0.2);
+  border-color: #5e35b1;
+  box-shadow: 0 0 0 3px rgba(94, 53, 177, 0.15); /* Brilho lilás ao clicar no input */
 }
 
 .modal-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 12px;
+  margin-top: 24px;
 }
 
 .modal-actions-col {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .info-group p {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-size: 0.95rem;
+  color: #2d3748;
 }
 
 /* Botões */
 .btn-primary {
-  background-color: #1b4f3a;
+  background-color: #5e35b1;
   color: white;
   border: none;
-  padding: 10px 18px;
+  padding: 10px 20px;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #4527a0;
 }
 
 .btn-secondary {
-  background-color: #e2e8f0;
+  background-color: #edf2f7;
   color: #4a5568;
   border: none;
-  padding: 10px 18px;
+  padding: 10px 20px;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btn-secondary:hover {
+  background-color: #e2e8f0;
 }
 
 .btn-danger {
-  background-color: #e63946;
+  background-color: #e53935;
   color: white;
   border: none;
   padding: 10px;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
+  transition: background-color 0.2s;
+}
+
+.btn-danger:hover {
+  background-color: #c62828;
 }
 
 .btn-whatsapp {
@@ -327,16 +351,22 @@ body {
   color: white;
   text-decoration: none;
   text-align: center;
-  padding: 10px;
+  padding: 12px;
   border-radius: 6px;
   font-weight: 600;
   display: block;
+  transition: background-color 0.2s;
 }
 
+.btn-whatsapp:hover {
+  background-color: #1ea952;
+}
+
+/* Responsividade Mobile */
 @media (max-width: 600px) {
   .day-cell {
-    min-height: 70px;
-    padding: 4px;
+    min-height: 75px;
+    padding: 6px;
   }
   .weekday-header {
     font-size: 0.75rem;
@@ -346,13 +376,13 @@ body {
     font-size: 0.65rem;
   }
   .person-name {
-    font-size: 0.68rem;
+    font-size: 0.7rem;
   }
-}
-
-/* Estilo para dias que já passaram */
-.day-cell.past-date {
-  opacity: 0.5;
-  cursor: not-allowed;
-  background-color: #f9f9f9;
+  .calendar-controls h2 {
+    font-size: 1.1rem;
+  }
+  .btn-nav {
+    padding: 6px 12px;
+    font-size: 0.85rem;
+  }
 }
